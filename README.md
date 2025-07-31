@@ -40,7 +40,7 @@ career_growth         0.11251909  0.009055435  -0.02912383 -0.081823686  0.03152
 +     labs(title = "Engagement vs Turnover")
 `geom_smooth()` using formula = 'y ~ x'
 
-#STEP 5: I generated insights based on questions like; Ask questions like: "Do low engagement scores correlate with turnover?", "are certain departments more at risk of attrition?", "How does career growth perception relate to tenure?" 
+#STEP 5: I generated insights based on questions like; Ask questions like: "Do low engagement scores correlate with turnover?", "are certain departments more at risk of attrition?", "What are the predictors of turover from the survey results?" 
 
 > aggregate(engagement ~ tenure_years, data = Cleaned_Merged_Dataset, FUN = mean)
     tenure_years engagement
@@ -147,3 +147,58 @@ career_growth         0.11251909  0.009055435  -0.02912383 -0.081823686  0.03152
 101         17.3   2.000000
 102         17.6   5.000000
 103         18.5   1.000000
+
+
+
+#Produced bar graph that shows turnover rate by department: 
+
+> library(dplyr)
+library(ggplot2)
+
+> Cleaned_Merged_Dataset %>%
++     group_by(department) %>%
++     summarise(turnover_rate = mean(turnover)) %>%
++     ggplot(aes(x = department, y = turnover_rate)) +
++     geom_col(fill = "steelblue") +
++     labs(title = "Turnover Rate by Department", y = "Turnover Rate")
+
+
+#Analyzed Drivers of Turnover by running a bomial logistic regression using survey responses (e.g., engagement, satisfaction) as predictors
+
+> model <- glm(turnover ~ engagement + manager_relationship + work_life_balance,
++              data = Cleaned_Merged_Dataset, family = "binomial")
+> summary(model)
+
+Call:
+glm(formula = turnover ~ engagement + manager_relationship + 
+    work_life_balance, family = "binomial", data = Cleaned_Merged_Dataset)
+
+Coefficients:
+                     Estimate Std. Error z value Pr(>|z|)    
+(Intercept)          -1.80281    0.45641  -3.950 7.81e-05 ***
+engagement            0.01792    0.08166   0.219    0.826    
+manager_relationship  0.03990    0.07948   0.502    0.616    
+work_life_balance     0.06600    0.07971   0.828    0.408    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 491.97  on 499  degrees of freedom
+Residual deviance: 491.05  on 496  degrees of freedom
+AIC: 499.05
+
+Number of Fisher Scoring iterations: 4
+
+
+#Produced Bionomial Logistic Regression to find out predictors of turnover from survey responses 
+
+> library(broom)
+
+> tidy(model) %>%
++     filter(term != "(Intercept)") %>%
++     ggplot(aes(x = reorder(term, estimate), y = estimate)) +
++     geom_col() +
++     coord_flip() +
++     labs(title = "Impact of Survey Responses on Turnover Odds",
++          x = "Survey Item", y = "Log Odds Estimate")
