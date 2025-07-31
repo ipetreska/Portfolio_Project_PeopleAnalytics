@@ -1,4 +1,4 @@
-# Portfolio_Project_PeopleAnalytics: To showcase my skillset in data wrangling, EDA, & talent insights generation for HR Stakeholders in R 
+# Portfolio_Project_PeopleAnalytics: In this project, I analyze and integrate employee demographic and survey data to uncover insights into workforce engagement, tenure, and turnover. The goal is to demonstrate capabilities in data cleaning, exploration, & People Analytics storytelling.
 
 #STEP 1: Cleaning/Merging/Data Wrangling. I used the following AI prompt:
 #"You are a data scientist working in R. Using the attached datasets:
@@ -12,7 +12,7 @@ Return the cleaned, merged dataset.
 
 #STEP 3: I uploaded the cleaned & merged dataset titled "Cleaned_Merged_Dataset" into R 
 
-#STEP 4: I explored the data with summary stats, correlation matrix, visualizing key relationships, see below: 
+#STEP 4: Within R Studio, I explored the data with the following; summary stats, correlation matrix, visualizing key relationships. See below: 
 
 > summary(Cleaned_Merged_Dataset)
   employee_id         age         department         tenure_years       turnover       engagement    manager_relationship work_life_balance career_growth 
