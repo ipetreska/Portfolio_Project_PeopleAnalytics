@@ -191,7 +191,7 @@ AIC: 499.05
 Number of Fisher Scoring iterations: 4
 
 
-#Produced Bionomial Logistic Regression to find out predictors of turnover from survey responses 
+#Visualized the Bionomial Logistic Regression to find out predictors of turnover from survey responses 
 
 > library(broom)
 
